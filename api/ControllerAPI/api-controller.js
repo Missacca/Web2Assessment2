@@ -39,33 +39,34 @@ router.get('/fundraisers/search', function(req, res) {
         SELECT f.*, c.Category_Name
         FROM fundraiser f
         LEFT JOIN category c ON f.CATEGORY_ID = c.CATEGORY_ID
-        WHERE f.ACTIVE = 1`;
+        WHERE f.ACTIVE = 1
+    `;
         const params = [];
         if(CAPTION){
-            query += "AND f.CAPTION = ?";
+            query += " AND f.CAPTION = ?";
             params.push(CAPTION);
         }
         if(ORGANIZER){
-            query += "AND f.ORGANIZER = ?";
+            query += " AND f.ORGANIZER = ?";
             params.push(ORGANIZER);
         }
         if(city){
-            query += "AND f.CITY = ?";
+            query += " AND f.CITY = ?";
             params.push(city);
         }
         if(category){
-            query += "AND f.CATEGORY_ID = ?";
+            query += " AND c.Category_Name = ?";
             params.push(category);
         }
         if(TARGET_FUNDING){
-            query += "AND f.TARGET_FUNDING = ?";
+            query += " AND f.TARGET_FUNDING = ?";
             params.push(TARGET_FUNDING);
         }
         if(CURRENT_FUNDING){
-            query += "AND f.CURRENT_FUNDING = ?";
+            query += " AND f.CURRENT_FUNDING = ?";
             params.push(CURRENT_FUNDING);
         }
-        db.query(query, params, (err, records ,fields) => {
+       connection.query(query, params, (err, records ,fields) => {
             if (err) {
                 console.error('Error retrieving product:', err);
             } else {

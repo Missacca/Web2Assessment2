@@ -30,15 +30,16 @@
       <input type="text" id="caption" name="caption"><br><br>
 
       <label for="Target Funding">Target Funding:</label>
-      <input type="text" id="Target Funding" name="Target Funding"><br><br>
+      <input type="number" id="Target Funding" name="Target Funding"><br><br>
 
       <label for="Current Funding">Current Funding:</label>
-      <input type="text" id="Current Funding" name="Current Funding"><br><br>
+      <input type="number" id="Current Funding" name="Current Funding"><br><br>
 
       <button type="button" onclick="searchFundraisers()">Search</button>
       <button type="button" onclick="clearCheckboxes()">Clear</button>
     </form>
     <div id="search-results"></div>
+
   </main>
   <script src="script.js"></script>
   <script>
@@ -54,9 +55,16 @@
         alert('Please select at least one criteria.');
         return;
       }
+      // 生成查询字符串
+      const params = new URLSearchParams();
+      if (category) params.append('category', category);
+      if (caption) params.append('CAPTION', caption);
+      if (city) params.append('city', city);
+      if (organizer) params.append('ORGANIZER', organizer);
+      if (TargetFunding) params.append('TARGET_FUNDING', TargetFunding);
+      if (CurrentFunding) params.append('CURRENT_FUNDING', CurrentFunding);
 
-      const query = `/search?organizer=${organizer}&city=${city}&category=${category}`;
-      fetch(query)
+      fetch(`http://localhost:5044/api/fundraisers/search?${params.toString()}`)
         .then(response => response.json())
         .then(data => {
           const results = document.getElementById('search-results');
@@ -65,8 +73,16 @@
             results.innerHTML = '<p style="color:red; font-weight:bold;">No fundraisers found.</p>';
           } else {
             data.forEach(fundraiser => {
-              const item = document.createElement('div');
-              item.innerHTML = `<a href="fundraiser.html?id=${fundraiser.FUNDRAISER_ID}">${fundraiser.CAPTION}</a>`;
+              const item = document.getElementById('search-results');
+              item.innerHTML = `
+                <h4>Organizer: ${fundraiser.ORGANIZER}</h4>
+                <p>${fundraiser.CAPTION}</p>
+                <p>City: ${fundraiser.CITY}</p>
+                <p>Target Funding: ${fundraiser.TARGET_FUNDING}</p>
+                <p>Current Funding: ${fundraiser.CURRENT_FUNDING}</p>
+                <p>Category: ${fundraiser.Category_Name}</p>
+                <a href="/fundraiser?fundraiser_id=${fundraiser.FUNDRAISER_ID}">View Details</a>
+            `;
               results.appendChild(item);
             });
           }
@@ -75,9 +91,7 @@
     }
 
     function clearCheckboxes() {
-      document.getElementById('organizer').value = '';
-      document.getElementById('city').value = '';
-      document.getElementById('category').value = '';
+      document.getElementById('search-form').reset();
     }
   </script>
 </body>
