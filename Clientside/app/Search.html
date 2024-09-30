@@ -26,6 +26,15 @@
       <label for="category">Category:</label>
       <input type="text" id="category" name="category"><br><br>
 
+      <label for="caption">caption:</label>
+      <input type="text" id="caption" name="caption"><br><br>
+
+      <label for="Target Funding">Target Funding:</label>
+      <input type="text" id="Target Funding" name="Target Funding"><br><br>
+
+      <label for="Current Funding">Current Funding:</label>
+      <input type="text" id="Current Funding" name="Current Funding"><br><br>
+
       <button type="button" onclick="searchFundraisers()">Search</button>
       <button type="button" onclick="clearCheckboxes()">Clear</button>
     </form>
@@ -37,6 +46,9 @@
       const organizer = document.getElementById('organizer').value;
       const city = document.getElementById('city').value;
       const category = document.getElementById('category').value;
+      const CurrentFunding = document.getElementById('Current Funding').value;
+      const TargetFunding = document.getElementById('Target Funding').value;
+      const caption = document.getElementById('caption').value;
 
       if (!organizer && !city && !category) {
         alert('Please select at least one criteria.');

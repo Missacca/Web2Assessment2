@@ -19,36 +19,29 @@
     <p>We work tirelessly to support the community. Join us and make a difference!</p>
     <section id="fundraisers">
       <h2>Active Fundraisers</h2>
-      <div id="data"></div>
+      <div id='datalist'></div>
     </section>
   </main>
+  <script src="script.js"></script>
   <script>
     //call GET API to get a list of Concerts
-    fetch("http://localhost:5044/api/categories")
-      .then(response => response.json())
-      .then(data => {
-        
-        const dataDiv=document.getElementById('data');
-        dataDiv.innerHTML="";
-
-        if(data.length>0){
-          data.forEach( concert => {
-              const newP=document.createElement("p");
-              newP.textContent=`Concert: ${concert.ArtistName}, Location: ${concert.Location}`;
-
-              dataDiv.appendChild(newP);
-          });
-
-        }
-        else{
-          dataDiv.textContent="No concert data";
-        }
-      })
-      .catch(error=>{
-        console.error("Error fecthing data",error);
-        document.getElementById('data').textContent="Failed to load data";
-      });
-
+    fetch("http://localhost:5044/api/fundraisers")
+            .then(response => response.json())
+            .then(data => {
+              const list = document.getElementById('datalist');
+                list.innerHTML = ''; // Clear any existing content
+               if (data.length>0) {
+                data.forEach(fundraiser => {
+                  const item = document.createElement('div');
+                 item.textContent=`FUNDRAISER_ID:${fundraiser.FUNDRAISER_ID},ORGANIZER:${fundraiser.ORGANIZER},CAPTION:${fundraiser.CAPTION},TARGET_FUNDING:${fundraiser.TARGET_FUNDING},CURRENT_FUNDING:${fundraiser.CURRENT_FUNDING},CITY:${fundraiser.CITY},ACTIVE:${fundraiser.ACTIVE},category_name:${fundraiser.category_name}`
+                  list.appendChild(item);
+                });
+              }
+               else {
+                 list.textContent="No Data";
+               }
+            })
+            .catch(err => console.error('Error fetching active fundraisers:', err));
   </script>
 </body>
 </html>

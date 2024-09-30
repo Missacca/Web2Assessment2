@@ -35,7 +35,7 @@ router.get('/categories',  (req, res) => {
 //3.Retrieve Active Fundraisers Based on Criteria
 router.get('/fundraisers/search', function(req, res) {
     let { category, CAPTION, city, ORGANIZER, TARGET_FUNDING, CURRENT_FUNDING } = req.query;
-    const query = `
+    let query = `
         SELECT f.*, c.Category_Name
         FROM fundraiser f
         LEFT JOIN category c ON f.CATEGORY_ID = c.CATEGORY_ID
@@ -85,5 +85,5 @@ router.get('/fundraisers/:id',  (req, res) => {
         }
       }
   );});
-  
+
 module.exports = router;

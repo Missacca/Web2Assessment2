@@ -19,14 +19,13 @@
     <div id="fundraiser-details"></div>
     <button onclick="donate()">Donate</button>
   </main>
-  <script src="script.js"></script>
   <script>
     // Fetch the fundraiser details using query string
     const urlParams = new URLSearchParams(window.location.search);
     const fundraiserId = urlParams.get('id');
 
     if (fundraiserId) {
-      fetch(`/fundraiser/${fundraiserId}`)
+      fetch(`http://localhost:5044/api/fundraiser/${fundraiserId}`)
         .then(response => response.json())
         .then(data => {
           const details = document.getElementById('fundraiser-details');
@@ -39,6 +38,7 @@
       alert('This feature is under construction');
     }
   </script>
+  <script src="script.js"></script>
 </body>
 </html>
 
