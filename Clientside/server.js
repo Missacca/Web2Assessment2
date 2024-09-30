@@ -21,5 +21,5 @@ app.use("/",(req,res)=>{
               <p>You should use <a href="http://localhost:2427/Fundraisers">Fundraisers</a> to Visit Fundraisers page.</p>`);
 })
 app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
+    console.log(`Server is running at http://localhost:${port}/Homepage`);
 });

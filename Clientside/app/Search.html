@@ -75,8 +75,8 @@
             data.forEach(fundraiser => {
               const item = document.getElementById('search-results');
               item.innerHTML = `
-                <h4>Organizer: ${fundraiser.ORGANIZER}</h4>
-                <p>${fundraiser.CAPTION}</p>
+                <h4>${fundraiser.ORGANIZER}</h4>
+                <p>Caption: ${fundraiser.CAPTION}</p>
                 <p>City: ${fundraiser.CITY}</p>
                 <p>Target Funding: ${fundraiser.TARGET_FUNDING}</p>
                 <p>Current Funding: ${fundraiser.CURRENT_FUNDING}</p>
