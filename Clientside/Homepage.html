@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Home - Fundraiser</title>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="Homepage.html">Home</a>
+      <a href="search.html">Search</a>
+      <a href="Fundraisers.html">Fundraisers</a>
+    </nav>
+  </header>
+  <main>
+    <h1>Welcome to Our Non-Profit Organization</h1>
+    <p>We work tirelessly to support the community. Join us and make a difference!</p>
+    <section id="fundraisers">
+      <h2>Active Fundraisers</h2>
+      <div id="data"></div>
+    </section>
+  </main>
+  <script>
+    //call GET API to get a list of Concerts
+    fetch("http://localhost:5044/api/categories")
+      .then(response => response.json())
+      .then(data => {
+        
+        const dataDiv=document.getElementById('data');
+        dataDiv.innerHTML="";
+
+        if(data.length>0){
+          data.forEach( concert => {
+              const newP=document.createElement("p");
+              newP.textContent=`Concert: ${concert.ArtistName}, Location: ${concert.Location}`;
+
+              dataDiv.appendChild(newP);
+          });
+
+        }
+        else{
+          dataDiv.textContent="No concert data";
+        }
+      })
+      .catch(error=>{
+        console.error("Error fecthing data",error);
+        document.getElementById('data').textContent="Failed to load data";
+      });
+
+  </script>
+</body>
+</html>

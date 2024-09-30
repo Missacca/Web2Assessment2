@@ -20,7 +20,9 @@ li_server.use(bodyParser.urlencoded({extended:true}));
  *  The default url is: /api
  */
 li_server.use("/api", appAPI);
-
+li_server.use("/",(req,res)=>{
+    res.send("This is LiYunlin Assessment2 Server side");
+})
 //start the web server on PORT: 5044
 li_server.listen(5044);
-console.log("Server is up now and running on port 5044");
+console.log("Server is up now and running on port localhost:5044");

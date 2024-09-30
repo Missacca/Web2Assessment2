@@ -34,13 +34,21 @@ router.get('/categories',  (req, res) => {
 
 //3.Retrieve Active Fundraisers Based on Criteria
 router.get('/fundraisers/search', function(req, res) {
-    let { category, city, minTARGET_FUNDING, maxTARGET_FUNDING } = req.query;
+    let { category, CAPTION, city, ORGANIZER, TARGET_FUNDING, CURRENT_FUNDING } = req.query;
     const query = `
         SELECT f.*, c.Category_Name
         FROM fundraiser f
         LEFT JOIN category c ON f.CATEGORY_ID = c.CATEGORY_ID
         WHERE f.ACTIVE = 1`;
         const params = [];
+        if(CAPTION){
+            query += "AND f.CAPTION = ?";
+            params.push(CAPTION);
+        }
+        if(ORGANIZER){
+            query += "AND f.ORGANIZER = ?";
+            params.push(ORGANIZER);
+        }
         if(city){
             query += "AND f.CITY = ?";
             params.push(city);
@@ -49,13 +57,13 @@ router.get('/fundraisers/search', function(req, res) {
             query += "AND f.CATEGORY_ID = ?";
             params.push(category);
         }
-        if(minTARGET_FUNDING){
-            query += "AND f.TARGET_FUNDING >= ?";
-            params.push(minTARGET_FUNDING);
+        if(TARGET_FUNDING){
+            query += "AND f.TARGET_FUNDING = ?";
+            params.push(TARGET_FUNDING);
         }
-        if(maxTARGET_FUNDING){
-            query += "AND f.TARGET_FUNDING <= ?";
-            params.push(maxTARGET_FUNDING);
+        if(CURRENT_FUNDING){
+            query += "AND f.CURRENT_FUNDING = ?";
+            params.push(CURRENT_FUNDING);
         }
         db.query(query, params, (err, records ,fields) => {
             if (err) {

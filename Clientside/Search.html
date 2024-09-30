@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Search Fundraisers</title>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="search.html">Search Fundraisers</a>
+    </nav>
+  </header>
+  <main>
+    <h1>Search Fundraisers</h1>
+    <form id="search-form">
+      <label for="organizer">Organizer:</label>
+      <input type="text" id="organizer" name="organizer"><br><br>
+
+      <label for="city">City:</label>
+      <input type="text" id="city" name="city"><br><br>
+
+      <label for="category">Category:</label>
+      <input type="text" id="category" name="category"><br><br>
+
+      <button type="button" onclick="searchFundraisers()">Search</button>
+      <button type="button" onclick="clearCheckboxes()">Clear</button>
+    </form>
+    <div id="search-results"></div>
+  </main>
+  <script src="script.js"></script>
+  <script>
+    function searchFundraisers() {
+      const organizer = document.getElementById('organizer').value;
+      const city = document.getElementById('city').value;
+      const category = document.getElementById('category').value;
+
+      if (!organizer && !city && !category) {
+        alert('Please select at least one criteria.');
+        return;
+      }
+
+      const query = `/search?organizer=${organizer}&city=${city}&category=${category}`;
+      fetch(query)
+        .then(response => response.json())
+        .then(data => {
+          const results = document.getElementById('search-results');
+          results.innerHTML = '';
+          if (data.length === 0) {
+            results.innerHTML = '<p style="color:red; font-weight:bold;">No fundraisers found.</p>';
+          } else {
+            data.forEach(fundraiser => {
+              const item = document.createElement('div');
+              item.innerHTML = `<a href="fundraiser.html?id=${fundraiser.FUNDRAISER_ID}">${fundraiser.CAPTION}</a>`;
+              results.appendChild(item);
+            });
+          }
+        })
+        .catch(err => console.error('Error searching fundraisers:', err));
+    }
+
+    function clearCheckboxes() {
+      document.getElementById('organizer').value = '';
+      document.getElementById('city').value = '';
+      document.getElementById('category').value = '';
+    }
+  </script>
+</body>
+</html>
