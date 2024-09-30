@@ -78,7 +78,8 @@ router.get('/fundraisers/search', function(req, res) {
 //4.Retrieve Fundraiser Details by ID
 router.get('/fundraisers/:id',  (req, res) => {
       const { id } = req.params;
-      connection.query("SELECT * FROM fundraiser WHERE FUNDRAISER_ID = ?",[id],(err,records,fields) => {
+      const sql=` SELECT f.FUNDRAISER_ID, f.ORGANIZER, f.CAPTION, f.TARGET_FUNDING, f.CURRENT_FUNDING, f.CITY, f.ACTIVE, c.Category_Name FROM fundraiser f LEFT JOIN category c ON f.CATEGORY_ID = c.CATEGORY_ID WHERE f.FUNDRAISER_ID = ?`
+      connection.query(sql,[id],(err,records,fields) => {
         if (err) {
             console.error('Error retrieving product:', err);
         } else {

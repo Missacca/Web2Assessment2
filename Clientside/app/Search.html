@@ -23,8 +23,15 @@
       <label for="city">City:</label>
       <input type="text" id="city" name="city"><br><br>
 
+
       <label for="category">Category:</label>
-      <input type="text" id="category" name="category"><br><br>
+      <select id="category" name="category">
+        <option value="">Select Category</option>
+        <option value="Health">Health</option>
+        <option value="Education">Education</option>
+        <option value="Children">Children</option>
+        <option value="Pool">Pool</option>
+      </select><br><br>
 
       <label for="caption">caption:</label>
       <input type="text" id="caption" name="caption"><br><br>
@@ -73,7 +80,7 @@
             results.innerHTML = '<p style="color:red; font-weight:bold;">No fundraisers found.</p>';
           } else {
             data.forEach(fundraiser => {
-              const item = document.getElementById('search-results');
+              const item = document.createElement('div');
               item.innerHTML = `
                 <h4>${fundraiser.ORGANIZER}</h4>
                 <p>Caption: ${fundraiser.CAPTION}</p>
@@ -81,7 +88,7 @@
                 <p>Target Funding: ${fundraiser.TARGET_FUNDING}</p>
                 <p>Current Funding: ${fundraiser.CURRENT_FUNDING}</p>
                 <p>Category: ${fundraiser.Category_Name}</p>
-                <a href="/fundraiser?fundraiser_id=${fundraiser.FUNDRAISER_ID}">View Details</a>
+                <a href="/fundraisers?fundraiser_id=${fundraiser.FUNDRAISER_ID}">View Details in Fundraiser page</a>
             `;
               results.appendChild(item);
             });
