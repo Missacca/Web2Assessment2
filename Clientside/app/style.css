@@ -105,7 +105,7 @@ main {
   font-size: 1rem;
 }
 
-#search-form button {
+button {
   background-color: #007bff;
   color: #ffffff;
   padding: 0.7rem 1.5rem;
