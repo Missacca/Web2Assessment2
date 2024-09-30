@@ -50,7 +50,7 @@
       const TargetFunding = document.getElementById('Target Funding').value;
       const caption = document.getElementById('caption').value;
 
-      if (!organizer && !city && !category) {
+      if (!organizer && !city && !category && !CurrentFunding && !TargetFunding && !caption) {
         alert('Please select at least one criteria.');
         return;
       }

@@ -15,8 +15,12 @@
     </nav>
   </header>
   <main>
-    <h1>Welcome to Our Non-Profit Organization</h1>
-    <p>We work tirelessly to support the community. Join us and make a difference!</p>
+    <div id="Welcome">
+    <h1>Welcome to Our Lin-Kindly Organization</h1>
+    <p>We are committed to improving lives in our communities and making a positive difference globally.</p>
+    <p>Thanks to the collective efforts of everyone, the village's water supply system was finally built, and hundreds of people finally had access to clean drinking water. It's a miracle we worked together.</p>
+    <p>How your act of kindness has changed a small life: With your help, many children now have access to education and better health care." They're smiling because you're there for them.</p>
+    <p>For more information or to join our events, please feel free to contact us</p></div>
     <section id="fundraisers">
       <h2>Active Fundraisers</h2>
       <div id='datalist'></div>
@@ -33,7 +37,15 @@
                if (data.length>0) {
                 data.forEach(fundraiser => {
                   const item = document.createElement('div');
-                 item.textContent=`FUNDRAISER_ID:${fundraiser.FUNDRAISER_ID},ORGANIZER:${fundraiser.ORGANIZER},CAPTION:${fundraiser.CAPTION},TARGET_FUNDING:${fundraiser.TARGET_FUNDING},CURRENT_FUNDING:${fundraiser.CURRENT_FUNDING},CITY:${fundraiser.CITY},ACTIVE:${fundraiser.ACTIVE},category_name:${fundraiser.category_name}`
+                 item.innerHTML=`
+                    <h2>${fundraiser.FUNDRAISER_ID}</h2>
+                     <p>Organizer: ${fundraiser.ORGANIZER}</p>
+                     <p>Caption: ${fundraiser.CAPTION}</p>
+                     <p>Target Funding: ${fundraiser.TARGET_FUNDING}</p>
+                     <p>Current Funding: ${fundraiser.CURRENT_FUNDING}</p>
+                     <p>City: ${fundraiser.CITY}</p>
+                     <p>Active: ${fundraiser.ACTIVE}</p>
+                     <p>Category: ${fundraiser.category_name}</p>`
                   list.appendChild(item);
                 });
               }
