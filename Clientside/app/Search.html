@@ -17,13 +17,15 @@
   <main>
     <h1>Search Fundraisers</h1>
     <form id="search-form">
+      <!-- Organizer Input Field -->
       <label for="organizer">Organizer:</label>
       <input type="text" id="organizer" name="organizer"><br><br>
 
+      <!-- City Input Field -->
       <label for="city">City:</label>
       <input type="text" id="city" name="city"><br><br>
 
-
+      <!-- Category Selection Field -->
       <label for="category">Category:</label>
       <select id="category" name="category">
         <option value="">Select Category</option>
@@ -33,15 +35,19 @@
         <option value="Pool">Pool</option>
       </select><br><br>
 
+      <!-- Caption Input Field -->
       <label for="caption">caption:</label>
       <input type="text" id="caption" name="caption"><br><br>
 
+      <!-- Target Funding Input Field -->
       <label for="Target Funding">Target Funding:</label>
       <input type="number" id="Target Funding" name="Target Funding"><br><br>
 
+      <!-- Current Funding Input Field -->
       <label for="Current Funding">Current Funding:</label>
       <input type="number" id="Current Funding" name="Current Funding"><br><br>
 
+      <!-- Search and Clear Buttons -->
       <button type="button" onclick="searchFundraisers()">Search</button>
       <button type="button" onclick="clearCheckboxes()">Clear</button>
     </form>
@@ -49,6 +55,12 @@
 
   </main>
   <script>
+    /* Function name: searchFundraisers
+    * Function to handle the search process for fundraisers
+    * It collects input values, creates a query string, and sends a fetch request to retrieve the fundraisers based on the given criteria.
+    * Params: none
+    * Return: none
+    */
     function searchFundraisers() {
       const organizer = document.getElementById('organizer').value;
       const city = document.getElementById('city').value;
@@ -61,7 +73,8 @@
         alert('Please select at least one criteria.');
         return;
       }
-      // 生成查询字符串
+
+      // Generate the query string based on provided criteria
       const params = new URLSearchParams();
       if (category) params.append('category', category);
       if (caption) params.append('CAPTION', caption);
@@ -70,16 +83,23 @@
       if (TargetFunding) params.append('TARGET_FUNDING', TargetFunding);
       if (CurrentFunding) params.append('CURRENT_FUNDING', CurrentFunding);
 
+      // Perform the fetch request with the generated query string
       fetch(`http://localhost:5044/api/fundraisers/search?${params.toString()}`)
         .then(response => response.json())
         .then(data => {
+          // Clear previous search results
           const results = document.getElementById('search-results');
           results.innerHTML = '';
+
+          // If no data is returned, show a message
           if (data.length === 0) {
             results.innerHTML = '<p style="color:red; font-weight:bold;">No fundraisers found.</p>';
           } else {
+
+            // Otherwise, display the retrieved fundraisers
             data.forEach(fundraiser => {
               const item = document.createElement('div');
+              //demonstrate the data in this 'item' part
               item.innerHTML = `
                 <h4>${fundraiser.ORGANIZER}</h4>
                 <p>Caption: ${fundraiser.CAPTION}</p>
@@ -96,6 +116,12 @@
         .catch(err => console.error('Error searching fundraisers:', err));
     }
 
+    /* Function name: clearCheckboxes
+     * Function to clear all input fields in the search form
+     * It resets the form to its default state.
+     * Params: none
+     * Return: none
+     */
     function clearCheckboxes() {
       document.getElementById('search-form').reset();
     }

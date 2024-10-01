@@ -1,11 +1,10 @@
 /**
  *  Configuration for accessing the db.
- *  These can be changed here and injected 
- *  into different parts of the app depending on when
  *  a db connection needs to be created.
+ *  Developer can change the configurations here.
  */
 module.exports={
-     host: 'localhost',
+    host: 'localhost',
     user: 'root', 
     password: '123456', 
     database: 'crowdfunding_db' 

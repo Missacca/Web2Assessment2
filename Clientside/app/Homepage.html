@@ -9,6 +9,7 @@
 <body>
   <header>
     <nav>
+      <!-- Navigation Links -->
       <a href="Homepage">Home</a>
       <a href="search">Search</a>
       <a href="Fundraisers">Fundraisers</a>
@@ -16,26 +17,35 @@
   </header>
   <main>
     <div id="Welcome">
+      <!-- Welcome Message Section -->
     <h1>Welcome to Our Lin-Kindly Organization</h1>
     <p>We are committed to improving lives in our communities and making a positive difference globally.</p>
     <p>Thanks to the collective efforts of everyone, the village's water supply system was finally built, and hundreds of people finally had access to clean drinking water. It's a miracle we worked together.</p>
     <p>How your act of kindness has changed a small life: With your help, many children now have access to education and better health care." They're smiling because you're there for them.</p>
     <p>For more information or to join our events, please feel free to contact us</p></div>
     <section id="fundraisers">
+      <!-- Active Fundraisers Section -->
       <h2>Active Fundraisers</h2>
       <div id='datalist'></div>
     </section>
   </main>
   <script>
+    /* Fetches a list of active fundraisers using a GET API request.
+     * It updates the 'datalist' section with the details of each fundraiser.
+     */
     //call GET API to get a list of Concerts
     fetch("http://localhost:5044/api/fundraisers")
             .then(response => response.json())
             .then(data => {
+              // Select the 'datalist' element to display the fundraiser list
               const list = document.getElementById('datalist');
                 list.innerHTML = ''; // Clear any existing content
+              // Check if any data is returned
                if (data.length>0) {
-                data.forEach(fundraiser => {
+                 // Iterate through each fundraiser and create a div to display its information
+                 data.forEach(fundraiser => {
                   const item = document.createElement('div');
+                  //demonstrate the data in this 'item' part
                  item.innerHTML=`
                     <h2>${fundraiser.FUNDRAISER_ID}</h2>
                      <p>Organizer: ${fundraiser.ORGANIZER}</p>
@@ -49,9 +59,11 @@
                 });
               }
                else {
-                 list.textContent="No Data";
+                 // Display a message if no data is found
+                 list.innerHTML="No Data";
                }
             })
+            // Log any errors that occur during the fetch process
             .catch(err => console.error('Error fetching active fundraisers:', err));
   </script>
 </body>
